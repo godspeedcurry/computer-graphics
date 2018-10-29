@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Three框架</title>
+	<script src="https://cdn.bootcss.com/three.js/r83/three.js"></script>
+	<style type="text/css">
+		div#canvas-frame {
+			border: none;
+			cursor: pointer;
+			width: 100%;
+			height: 600px;
+			background-color: #EEEEEE;
+		}
+
+	</style>
+	<script>
+		var renderer;
+		function initThree() {
+			width = document.getElementById('canvas-frame').clientWidth;
+			height = document.getElementById('canvas-frame').clientHeight;
+			renderer = new THREE.WebGLRenderer({
+				antialias : true
+			});
+			renderer.setSize(width, height);
+			document.getElementById('canvas-frame').appendChild(renderer.domElement);
+			renderer.setClearColor(0xFFFFFF, 1.0);
+		}
+
+		var camera;
+		function initCamera() {
+			camera = new THREE.PerspectiveCamera(45, width / height, 1, 10000);
+			camera.position.x = 0;
+			camera.position.y = 1000;
+			camera.position.z = 0;
+			camera.up.x = 0;
+			camera.up.y = 0;
+			camera.up.z = 1;
+			camera.lookAt({
+				x : 0,
+				y : 0,
+				z : 0
+			});
+		}
+
+		var scene;
+		function initScene() {
+			scene = new THREE.Scene();
+		}
+		var material = new THREE.MeshBasicMaterial({
+			color: 0x003993,
+			wireframe: true
+		});
+		function drawPlane(scene, material) {
+			var plane = new THREE.Mesh(new THREE.PlaneGeometry(4, 4), material);
+			scene.add(plane);
+		}
+		var light;
+		function initLight() {
+			light = new THREE.DirectionalLight(0xFF0000, 1.0, 0);
+			light.position.set(100, 100, 200);
+			scene.add(light);
+		}
+
+		var cube;
+		function initObject() {
+
+			var geometry = new THREE.Geometry();
+			var material = new THREE.LineBasicMaterial( { vertexColors: true } );
+			var color1 = new THREE.Color( 0x003993 ), color2 = new THREE.Color( 0x003993 );
+
+                // 线的材质可以由2点的颜色决定
+                var p1 = new THREE.Vector3( 756, 0, 222 );
+                var p2 = new THREE.Vector3( -756, 0, 222 );
+                geometry.vertices.push(p1);
+                geometry.vertices.push(p2);
+                geometry.colors.push( color1, color2 );
+
+                var line = new THREE.Line( geometry, material, THREE.LinePieces );
+                scene.add(line);
+            }
+            var width = 1512;
+            var height = 756;
+            function createRect(){//背景蓝
+            	var planeGeometry = new THREE.PlaneBufferGeometry(width,height, 1, 1);
+				// 创建平面的材料
+				var planeMaterial = new THREE.MeshBasicMaterial({color: 0x003993});
+				// 合成平面
+				var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+				// 设置平面的旋转角度
+				plane.rotation.x = -0.5 * Math.PI;
+				// // 设置平面的位置
+				// plane.position.x = 0;
+				// plane.position.y = 0;
+				// plane.position.z = 0;
+				// 在场景中添加平面
+				scene.add(plane);
+			}
+			   function createRect1(){//背景红 横着
+			   	var planeGeometry = new THREE.PlaneBufferGeometry(width/2,height/10, 1, 1);
+				// 创建平面的材料
+				var planeMaterial = new THREE.MeshBasicMaterial({color: 0xFF0000});
+				// 合成平面
+				var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+				// 设置平面的旋转角度
+				plane.rotation.x = -0.5 * Math.PI;
+				// // 设置平面的位置
+				plane.position.x = width/4;
+				plane.position.y =0;
+				plane.position.z =  height/4;
+				// 在场景中添加平面
+				scene.add(plane);
+			}
+			 function createRect2(){//背景红 竖着
+			 	var planeGeometry = new THREE.PlaneBufferGeometry(width/20,height/2, 1, 1);
+				// 创建平面的材料
+				var planeMaterial = new THREE.MeshBasicMaterial({color: 0xFF0000});
+				// 合成平面
+				var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+				// 设置平面的旋转角度
+				plane.rotation.x = -0.5 * Math.PI;
+				// // 设置平面的位置
+				plane.position.x = width/4;
+				plane.position.y =0;
+				plane.position.z =  height/4;
+				// 在场景中添加平面
+				scene.add(plane);
+			}
+			 function createRect3(){//背景白 横着
+			 	var planeGeometry = new THREE.PlaneBufferGeometry(width/2,height/6, 1, 1);
+				// 创建平面的材料
+				var planeMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+				// 合成平面
+				var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+				// 设置平面的旋转角度
+				plane.rotation.x = -0.5 * Math.PI;
+				// // 设置平面的位置
+				plane.position.x = width/4;
+				plane.position.y =0;
+				plane.position.z =  height/4;
+				// 在场景中添加平面
+				scene.add(plane);
+			}
+			function createSeven(){  //左下角最大的
+				var rectShape= new THREE.Shape();
+				var R = 2268/29;var r = 1008/29;
+				var theta = Math.PI/2;
+				var delta = Math.PI/7;
+				var sx = width/4;
+				var se = height/4;
+				rectShape.moveTo(sx,se);
+				for(var i=0;i<8;i++){
+					rectShape.lineTo(sx-R*Math.cos(theta), se-R*Math.sin(theta));
+					theta-=delta;
+					rectShape.lineTo(sx-r*Math.cos(theta), se-r*Math.sin(theta));
+					theta-=delta;
+				}
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+
+			function createSeven1(){  //右边第一个
+				var rectShape= new THREE.Shape();
+				var R = 1080/29;var r = 600/29;
+				var theta = Math.PI/2;
+				var delta = Math.PI/7;
+				var sx = -width/16;
+				var se = -height/16;
+				rectShape.moveTo(sx,se);
+				for(var i=0;i<8;i++){
+					rectShape.lineTo(sx-R*Math.cos(theta), se-R*Math.sin(theta));
+					theta-=delta;
+					rectShape.lineTo(sx-r*Math.cos(theta), se-r*Math.sin(theta));
+					theta-=delta;
+				}
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+			function createSeven2(){  //右边第2个
+				var rectShape= new THREE.Shape();
+				var R = 1080/29;var r = 600/29;
+				var theta = Math.PI/2;
+				var delta = Math.PI/7;
+				var sx = -width/4;
+				var se = -height/3;
+				rectShape.moveTo(sx,se);
+				for(var i=0;i<8;i++){
+					rectShape.lineTo(sx-R*Math.cos(theta), se-R*Math.sin(theta));
+					theta-=delta;
+					rectShape.lineTo(sx-r*Math.cos(theta), se-r*Math.sin(theta));
+					theta-=delta;
+				}
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+
+			function createSeven3(){  //右边第3个
+				var rectShape= new THREE.Shape();
+				var R = 1080/29;var r = 600/29;
+				var theta = Math.PI/2;
+				var delta = Math.PI/7;
+				var sx = -width/4;
+				var se = height/3;
+				rectShape.moveTo(sx,se);
+				for(var i=0;i<8;i++){
+					rectShape.lineTo(sx-R*Math.cos(theta), se-R*Math.sin(theta));
+					theta-=delta;
+					rectShape.lineTo(sx-r*Math.cos(theta), se-r*Math.sin(theta));
+					theta-=delta;
+				}
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+
+			function createSeven4(){  //右边第4个
+				var rectShape= new THREE.Shape();
+				var R = 1080/49;var r = 600/49;
+				var theta = Math.PI/2;
+				var delta = Math.PI/7;
+				var sx = -width/3;
+				var se = -height/38;
+				rectShape.moveTo(sx,se);
+				for(var i=0;i<8;i++){
+					rectShape.lineTo(sx-R*Math.cos(theta), se-R*Math.sin(theta));
+					theta-=delta;
+					rectShape.lineTo(sx-r*Math.cos(theta), se-r*Math.sin(theta));
+					theta-=delta;
+				}
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+			function createSeven5(){  //右边第5个 七角星
+				var rectShape= new THREE.Shape();
+				var R = 1080/29;var r = 600/29;
+				var theta = Math.PI/2;
+				var delta = Math.PI/7;
+				var sx = -width/2.6;
+				var se = -height/4;
+				rectShape.moveTo(sx,se);
+				for(var i=0;i<8;i++){
+					rectShape.lineTo(sx-R*Math.cos(theta), se-R*Math.sin(theta));
+					theta-=delta;
+					rectShape.lineTo(sx-r*Math.cos(theta), se-r*Math.sin(theta));
+					theta-=delta;
+				}
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+			function createRect4(){//背景白 竖着
+				var planeGeometry = new THREE.PlaneBufferGeometry(width/13,height/2, 1, 1);
+				// 创建平面的材料
+				var planeMaterial = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
+				// 合成平面
+				var plane = new THREE.Mesh(planeGeometry, planeMaterial);
+				// 设置平面的旋转角度
+				plane.rotation.x = -0.5 * Math.PI;
+				// // 设置平面的位置
+				plane.position.x = width/4;
+				plane.position.y =0;
+				plane.position.z =  height/4;
+				// 在场景中添加平面
+				scene.add(plane);
+			}
+			function initObject1() {
+				var geometry = new THREE.Geometry();
+				var material = new THREE.LineBasicMaterial( { vertexColors: true } );
+				var color1 = new THREE.Color( 0x003993 ), color2 = new THREE.Color( 0x003993 );
+                // 线的材质可以由2点的颜色决定
+                var p1 = new THREE.Vector3( 756, 0, -378 );
+                var p2 = new THREE.Vector3( -756, 0, -378 );
+                geometry.vertices.push(p1);
+                geometry.vertices.push(p2);
+                geometry.colors.push( color1, color2 );
+                var line = new THREE.Line( geometry, material, THREE.LinePieces );
+                scene.add(line);
+            }
+            function createCircle(){
+            	var geometry = new THREE.CircleBufferGeometry( 35, 100 );
+            	var material = new THREE.MeshBasicMaterial( { color: 0xFFFFFF } );
+            	var circle = new THREE.Mesh( geometry, material );
+            	circle.rotation.x = -0.5 * Math.PI;
+            	circle.position.x = width/4;
+            	circle.position.y =0;
+            	circle.position.z =  -height/4;
+            	scene.add( circle );
+            }
+            function createMi1(){  //左上角到右下角的米  白色
+            	var rectShape= new THREE.Shape();
+            	var sx = width/2;
+            	var se = -height/2;
+            	rectShape.moveTo(sx,se);
+            	rectShape.lineTo(sx+80, se);
+            	rectShape.lineTo(80,0);
+            	rectShape.lineTo(0,0);
+            	rectShape.lineTo(0,-42);
+            	rectShape.lineTo(sx-80,se);
+            	rectShape.lineTo(sx,se);
+            	var rectGeom = new THREE.ShapeGeometry( rectShape );
+            	var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+            	rectMesh.rotation.x = -0.5 * Math.PI;
+            	scene.add(rectMesh);
+            }
+			  function createMi2(){  //左下角到右上角的米 白色
+			  	var rectShape= new THREE.Shape();
+			  	var sx = width/2;
+			  	var se = 0;
+			  	rectShape.moveTo(sx,se);
+			  	rectShape.lineTo(sx-80, se);
+			  	rectShape.lineTo(0,-height/2+42);
+			  	rectShape.lineTo(0,-height/2);
+			  	rectShape.lineTo(80,-height/2);
+			  	rectShape.lineTo(sx,se-42);
+			  	rectShape.lineTo(sx,se);
+			  	var rectGeom = new THREE.ShapeGeometry( rectShape );
+			  	var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xffffff } ) ) ;
+			  	rectMesh.rotation.x = -0.5 * Math.PI;
+			  	scene.add(rectMesh);
+			  }
+			  function createRed1(){  //左下角到右上角 的红
+			  	var rectShape= new THREE.Shape();
+			  	var sx = width/2;
+			  	var se = 0;
+			  	rectShape.moveTo(sx,se);
+			  	rectShape.lineTo(sx-60, se);
+			  	rectShape.lineTo(0,-height/2);
+			  	rectShape.lineTo(50,-height/2);
+			  	rectShape.lineTo(sx,se);
+			  	var rectGeom = new THREE.ShapeGeometry( rectShape );
+			  	var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xFF0000 } ) ) ;
+			  	rectMesh.rotation.x = -0.5 * Math.PI;
+			  	scene.add(rectMesh);
+			  }
+			function createRed2(){  //左上角到右下角 的红
+				var rectShape= new THREE.Shape();
+				var sx = width/2;
+				var se = -height/2;
+				rectShape.moveTo(sx,se);
+				rectShape.lineTo(sx, se+22);
+				rectShape.lineTo(0,0);
+				rectShape.lineTo(0,-22);
+				rectShape.lineTo(sx,se);
+				var rectGeom = new THREE.ShapeGeometry( rectShape );
+				var rectMesh = new THREE.Mesh( rectGeom, new THREE.MeshBasicMaterial( { color: 0xFF0000 } ) ) ;
+				rectMesh.rotation.x = -0.5 * Math.PI;
+				scene.add(rectMesh);
+			}
+			function threeStart() {
+				initThree();
+				initCamera();
+				initScene();
+				initLight();
+				createRect();
+				createMi1();
+				createMi2();
+				createRed1();
+				createRed2();
+				createRect3();
+				createRect4();
+				createRect1();
+				createRect2();
+				createSeven();
+				createSeven1();
+				createSeven2();
+				createSeven3();
+				createSeven4();
+				createSeven5();
+				renderer.clear();
+				renderer.render(scene, camera);
+			}
+
+		</script>
+	</head>
+
+	<body onload="threeStart();">
+		<div id="canvas-frame"></div>
+	</body>
+	</html>
