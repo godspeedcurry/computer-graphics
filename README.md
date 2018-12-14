@@ -1,18 +1,35 @@
-### Assignment1:
-#### ① draw a ellipse
-1. Scan convert an ellipse
+1. ### Assignment1:
 
-2. Input: center(x,y) Ra,Rb
+   #### ① draw a ellipse
 
-3. Output:an image with the ellipse in a PPM file
+   1. Scan convert an ellipse
 
-4. Extra 20%: Extension to Non-Axis Aligned Case
+   2. Input: center(x,y) Ra,Rb
 
-   -Additional Input: Theta
+   3. Output:an image with the ellipse in a PPM file
 
+   4. Extra 20%: Extension to Non-Axis Aligned Case
 
-### Assignment2:
-#### ① Draw the flag of Australia using OpenGL 
-1. Extra 10%:Implementation with WebGL 
-   or OpenGL ES –JavaScript –iOS / Android
-2. Extra could replace the original assignment •Due: 23:59, 10/21 (Main Assignment
+      -Additional Input: Theta
+
+   #### ② draw a flag
+
+   1. Draw the flag of Australia using OpenGL 
+
+      •Extra10%:Implementation with WebGL or  OpenGL ES 
+
+      –JavaScript 
+
+      –iOS / Android
+
+      –Extra could replace the original assignment
+
+   #### ③Build a solar system with OpenGL
+
+   1. One sun, 2+ planets, 1+ satellite –Planets orbit around the sun –Satellites orbit around its planet –Trajectories are not co‐planar –Navigation in the system (3D viewing) 
+
+      •E.g., W+S+A+D ‐> walk
+
+      mouse‐move ‐> change 
+
+      view direction
