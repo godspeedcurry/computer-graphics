@@ -33,3 +33,7 @@
       mouse‐move ‐> change 
 
       view direction
+   #### ④Build a solar system with OpenGL
+
+   1. Compute the spectral responses with/without the glasses (absolute values are not important).
+   2. Any potential problem with the glasses?
